@@ -236,6 +236,9 @@
   "LastOnlineTime": {
     "One": "最后在线时间"
   },
+  "GroupMember": {
+    "One": "组"
+  },
   "JustNow": {
     "One": "刚刚"
   },

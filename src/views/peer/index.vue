@@ -1,7 +1,17 @@
 <template>
   <div>
     <el-card class="list-query" shadow="hover">
-      <el-form inline label-width="60px">
+      <el-form  inline label-width="60px">
+        <el-form-item :label="T('GroupMember')">
+          <el-select v-model="listQuery.group_id" clearable>
+            <el-option
+                v-for="item in groupListRes.list"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="ID">
           <el-input v-model="listQuery.id" clearable/>
         </el-form-item>
@@ -89,7 +99,7 @@
           <el-table-column v-if="c.name==='username'" prop="username" :label="T('Username')" align="center" width="120"/>
           <el-table-column v-if="c.name==='group_id'" prop="group_id" :label="T('Group')" align="center" width="120">
             <template #default="{row}">
-              <span v-if="row.group_id"> <el-tag>{{ groupListRes.list?.find(g => g.id === row.group_id)?.name }} </el-tag> </span>
+              <span v-if="row.group_id"> <el-tag style="cursor: pointer" @click="handleClipboardGroup(row.group_id, $event)">{{ groupListRes.list?.find(g => g.id === row.group_id)?.name }} </el-tag> </span>
               <span v-else> - </span>
             </template>
           </el-table-column>
@@ -565,6 +575,11 @@
     visibleColumns.value.splice(index, 1)
     visibleColumns.value.splice(index + 1, 0, col)
 
+  }
+
+  const handleClipboardGroup = (text, event) => {
+    listQuery.group_id = text
+    getList()
   }
 </script>
 
